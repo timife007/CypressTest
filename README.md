@@ -1,7 +1,6 @@
 # CypressTest
 
-![color_tool](https://user-images.githubusercontent.com/59525449/192163481-a93a26d0-5353-454e-a819-785c4c9f89e4.png)
-
+<img src="https://user-images.githubusercontent.com/59525449/192163481-a93a26d0-5353-454e-a819-785c4c9f89e4.png" width="400" height="800">  <img src="https://user-images.githubusercontent.com/59525449/192163598-1700cf9f-38e0-429f-a079-a8810d6af45f.png" width="400" height="800">
 
 
 ## Tech stack & Open-source libraries
