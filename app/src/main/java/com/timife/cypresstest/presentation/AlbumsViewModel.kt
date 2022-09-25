@@ -27,6 +27,9 @@ class AlbumsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            /**
+             * Async to run both tasks in parallel.
+             */
             val albumResult = async { getAlbums()}
             val photoResult = async { getPhotos()}
 

@@ -22,12 +22,19 @@ class AlbumRepositoryImpl @Inject constructor(
 ):AlbumRepository {
     override fun getAlbums(): Flow<Resource<List<Album>>> {
         return flow {
+            /**
+             * Initially fetch from database if not null
+             */
             emit(Resource.Loading(true))
             val cachedAlbums = dao.getCachedAlbums()
             emit(Resource.Success(data = cachedAlbums.map {
                     it.toAlbum()
-                }))
+                }
+            ))
 
+            /**
+             * Check if database is empty,if not empty, stop loading.
+             */
             val isDbEmpty = cachedAlbums.isEmpty()
             val shouldLoadFromDb = !isDbEmpty
             if (shouldLoadFromDb) {
@@ -35,6 +42,9 @@ class AlbumRepositoryImpl @Inject constructor(
                 return@flow
             }
 
+            /**
+             * Fetch remote album data
+             */
             val remoteAlbums = try {
                 api.getAlbums()
             } catch (e: IOException) {
@@ -54,6 +64,9 @@ class AlbumRepositoryImpl @Inject constructor(
                 null
             }
 
+            /**
+             * Fetch remote photos data
+             */
             val remotePhotos = try {
                 api.getPhotos()
             } catch (e: IOException) {
@@ -73,6 +86,9 @@ class AlbumRepositoryImpl @Inject constructor(
                 null
             }
 
+            /**
+             * Cache remote data.
+             */
             remoteAlbums?.let{ albums ->
                 dao.clearAlbum()
                 dao.insertAlbum(
